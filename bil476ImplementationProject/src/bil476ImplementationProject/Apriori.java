@@ -1,3 +1,6 @@
+/**
+ * @author Gozde Boztepe 111101024
+ */
 package bil476ImplementationProject;
 
 import java.util.*;
@@ -22,7 +25,7 @@ public class Apriori {
 		createTransactionSet(filePath);
 		loopCount = 0;
 	}
-
+//transactionlari okur ve ilk candidate itemlari olusturur
 	public void createTransactionSet(String filePath) {
 		try {
 			loopCount++;
@@ -46,7 +49,7 @@ public class Apriori {
 				transactions.add(arrayTemp);
 
 			}
-			
+
 			in.close();
 			minSup = transactions.size() * minSup;
 			countingCandidateItems();
@@ -55,21 +58,18 @@ public class Apriori {
 		}
 
 	}
-
+//olusturulmus candidateleri transaction icinde sayarak > minsup olanlari frequent itemsette saklar
 	public void countingCandidateItems() {
 		// System.out.println(minSup);
 		System.out.println("Counting Candidate Items " + loopCount);
 		frequentItems.clear();
+		int count = 0;
 		for (String cndStr : candidateItems) {
-			int count = 0;
+			count = 0;
 			if (loopCount == 1) {
 				for (ArrayList<String> arr : transactions) {
 					if (arr.contains(cndStr))
-						count++;
-					// for (String str : arr) {
-					// if(cndStr.equals(str))
-					// count++;
-					// }
+						count++;					
 				}
 
 				if (count >= minSup)
@@ -85,40 +85,32 @@ public class Apriori {
 					for (String mulStr : tmp) {
 						if (arr.contains(mulStr))
 							flag = true;
-						else{
+						else {
 							flag = false;
 							break;
-							}
+						}
 					}
 					if (flag)
 						count++;
-
-					// for (int i = 0; i < multiTemp.length; i++) {
-					// if (arr.contains(multiTemp[i]))
-					// flag = true;
-					// else
-					// flag = false;
-					// }
-					// if(flag){
-					// }
 
 				}
 				if (count >= minSup)
 					if (!frequentItems.contains(cndStr))
 						frequentItems.add(cndStr);
-				// System.out.println(frequentItems.size());
-
+				
 			}
 		}
+		double sup = count;
 		for (String stri : frequentItems) {
 			System.out.println(stri);
-		 }
-		System.out.println("Frequent Item Size: "+ frequentItems.size());
+		}
+		System.out.println("Frequent Itemset Size: " + frequentItems.size());
 		candidateGeneration();
 	}
-
+//yeni candidate ler uretmek icin kullanilir
+//frequent itemlar uzerinde gezilerek candidateler olusturulur
 	public void candidateGeneration() {
-		System.out.println("Candidate Generation " + loopCount);		
+		System.out.println("Candidate Generation " + loopCount);
 		candidateItems.clear();
 		if (loopCount == 1) {
 			for (String genStr : frequentItems) {
@@ -141,18 +133,18 @@ public class Apriori {
 						continue;
 					String[] genArray = genStr.split(" ");
 					String[] frqArray = frqStr.split(" ");
-					if(!genArray[0].equals(frqArray[0]))
+					if (!genArray[0].equals(frqArray[0]))
 						continue;
-					if(!(candidateItems.isEmpty()) ){
+					if (!(candidateItems.isEmpty())) {
 						String tmp = "";
-						for (int i = 0; i < frqArray.length; i++) {							
-								tmp += genArray[i]+" ";							
+						for (int i = 0; i < frqArray.length; i++) {
+							tmp += genArray[i] + " ";
 						}
-						tmp += frqArray[frqArray.length-1];
-						if(candidateItems.contains(tmp))
+						tmp += frqArray[frqArray.length - 1];
+						if (candidateItems.contains(tmp))
 							continue;
 					}
-					String[] candArray = new String[frqArray.length+1];
+					String[] candArray = new String[frqArray.length + 1];
 					boolean flag = false;
 					String candWord = "";
 					for (int i = 0; i < frqArray.length; i++) {
@@ -160,26 +152,21 @@ public class Apriori {
 							if (genArray[i].equals(frqArray[i])) {
 								flag = true;
 								candArray[i] = frqArray[i];
-							} else{
+							} else {
 								flag = false;
 								break;
 							}
 						}
 						if (i == frqArray.length - 1 && flag) {
-							if (!genArray[i].equals(frqArray[i])){
+							if (!genArray[i].equals(frqArray[i])) {
 								candArray[i] = frqArray[i];
-								candArray[i+1] = genArray[i];
-								}
+								candArray[i + 1] = genArray[i];
+							}
 						}
 					}
-//					for (int i = 0; i < candArray.length; i++) {
-//						if (candArray[i] == null) {
-//							candArray[i] = "";
-//						}
-//					}
 					if (flag) {
 						for (int i = 0; i < candArray.length; i++) {
-							if (i == candArray.length - 1 )
+							if (i == candArray.length - 1)
 								candWord += candArray[i];
 							else
 								candWord += candArray[i] + " ";
@@ -189,28 +176,33 @@ public class Apriori {
 					if (candidateItems.isEmpty() && flag)
 						candidateItems.add(candWord);
 
-					if (!(candidateItems.contains(candWord))&& flag)
+					if (!(candidateItems.contains(candWord)) && flag)
 						candidateItems.add(candWord);
 				}
 			}
 
 		}
-		
-		
-		System.out.println("Candidate Item Size: "+candidateItems.size());
-//		for (String stri : candidateItems) {
-//			System.out.println(stri);
-//		 }
+
+		System.out.println("Candidate Itemset Size: " + candidateItems.size());
+
 		loopCount++;
-		if(candidateItems.size() == 0)
+		if (candidateItems.size() == 0) {
+
+			System.out.println("Min sup = " + minSup / transactions.size()
+					+ " degeri ile " + frequentItems.size()
+					+ " frequent item bulunmustur ");
+			System.out.println("Bitti");
 			System.exit(0);
+		}
 		countingCandidateItems();
 
 	}
 
+	// main classinda algorithmayi calistirmak icin min sup ve calistirilmak
+	// istenen dosya verilir.
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Apriori ap = new Apriori("mushroom.dat", 0.8);
+		Apriori ap = new Apriori("mushroom.dat", 0.6);
 
 	}
 

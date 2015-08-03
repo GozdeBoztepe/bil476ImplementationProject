@@ -1,0 +1,4 @@
+-projenin calistirilmasi icin kullanilan IDE de yeni bir proje olusturulur.
+-Olusturulan yeni projenin altina bu projenin src klasoru kopyalanir.
+-Ayni zamanda mushroom.dat ve chess.dat file larida projenin altina kopyalanir.
+-Proje artik test edilebilir.

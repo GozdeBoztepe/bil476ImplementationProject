@@ -1,0 +1,8 @@
+-Apriori.java nin icinde 203. satirdan baslayan main methodunda 
+Apriori nesnesi olusturulurken minSup ve dosya adi degerleri gonderilir.
+-Bu degerler minSup 0.1 - 0.9 deger araliginda olup, dosya adi icin .dat uzantili dosyalar kullanilmistir.
+-.dat uzantili dosyalar arff file dan farkli olarak sadece data kismini icermektedir.
+ Bu dosya turu kullanilirken Tansel Hocaya danisilmis ve onay alinmistir.
+ -Ornek olarak 2 adet dosya bulunmaktadir. 
+ Bu dosyalar calistirilirken minsup kucuk tutulmasi algorithmanin daha kisa surede bitmesini saglar.
+ Uygulama frequent Itemsetleri ekrana basmaktadir.
