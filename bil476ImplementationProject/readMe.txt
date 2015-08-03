@@ -2,3 +2,4 @@
 -Olusturulan yeni projenin altina bu projenin src klasoru kopyalanir.
 -Ayni zamanda mushroom.dat ve chess.dat file larida projenin altina kopyalanir.
 -Proje artik test edilebilir.
+-Proje https://github.com/GozdeBoztepe/bil476ImplementationProject adresinde de indirilebilir.
