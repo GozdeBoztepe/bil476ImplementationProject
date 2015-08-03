@@ -1,7 +1,7 @@
 /**
  * @author Gozde Boztepe 111101024
  */
-package bil476ImplementationProject;
+
 
 import java.util.*;
 import java.awt.peer.CanvasPeer;
